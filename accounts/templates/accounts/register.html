@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock  %}
+
+
+{% block content %}
+
+<hr><hr><hr><hr><hr><hr><hr><hr><hr>
+<div class="container py-10 mt-10">
+    {% include 'messages.html' %}
+    <div style="max-width:500px; margin:0 auto;">
+        <h2>Register</h2>
+        <form action="{% url 'register' %}" method="POST" class="form">
+            {% csrf_token %}
+            {{form}}
+            <button class="w-100 btn form-control border-secondary py-2 mt-3 bg-white text-primary" type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

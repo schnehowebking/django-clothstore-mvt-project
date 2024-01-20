@@ -1,0 +1,64 @@
+<style>
+    .messages {
+        position: fixed;
+        top: 200;
+        right: 0;
+        width: 300px;
+        padding: 15px;
+        z-index: 1000;
+    }
+
+    .messages .success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .messages .error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .messages .alert {
+        margin-bottom: 0;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .messages .font-bold {
+        font-weight: bold;
+    }
+
+    .messages .text-sm {
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="messages">
+    {% for message in messages %}
+        {% if message.tags %}
+            {% if 'success' in message.tags %}
+                <div class="alert alert-success" role="alert">
+                    <div class="d-flex">
+                        <div class="py-1"></div>
+                        <div>
+                            <p class="font-bold">Success!</p>
+                            <p class="text-sm">{{ message }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% elif 'error' in message.tags %}
+                <div class="alert alert-danger" role="alert">
+                    <div class="flex">
+                        <div class="py-1"></div>
+                        <div>
+                            <p class="font-bold">Error!</p>
+                            <p class="text-sm">{{ message }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

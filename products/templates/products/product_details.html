@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop-Product Details{% endblock  %}
+
+
+{% block content %}
+ <!-- Single Product Start -->
+ <div class="container-fluid py-5 mt-5">
+     
+    <div class="container py-5">
+        {% include 'messages.html' %}
+        <div class="row g-4 mb-5">
+            <div class="col-lg-12 col-xl-12">
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="border rounded">
+                            <a href="#">
+                                <img src="{{product.image.url}}" class="img-fluid rounded" alt="Image">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="fw-bold mb-3">{{product.name}}</h4>
+                        <p class="mb-3">Category: {{product.category}}</p>
+                        <h5 class="fw-bold mb-3">{{product.price}} $</h5>
+                        <h5 class="fw-bold mb-3"> Available: {{product.quantity}} Pcs</h5>
+                        <h6 class=""> Size: {{product.size}}</h6>
+                        <h6 class=""> Color: {{product.color}}</h6>
+                        <div class="d-flex mb-4">
+                            Avarage Ratings: {{ average_rating }}
+                        </div>
+                        
+                        <p class="mb-4">{{product.description}}</p>
+                        <div class="input-group quantity mb-5" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input name="quantity" type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <form action="{% url 'buy_product' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"> <i class="fa fa-shopping-bag me-2 text-primary"> </i> Buy</button>
+                        </form>
+                        <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-plus me-2 text-primary"> </i>Add to Wish List</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-12">
+                        <nav>
+                            <div class="nav nav-tabs mb-3">
+                                <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                                    aria-controls="nav-about" aria-selected="true">Description</button>
+                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                    aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content mb-5">
+                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                <p>{{product.description}}</p>
+                                
+                            </div>
+                            <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                
+                                {% for review in reviews %}
+                                    
+                                <div class="d-flex justify-content-between">
+                                    <img src="{{review.reviewer.customer.image.url}}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                    <div class="w-100">
+                                        <p class="mb-2" style="font-size: 14px;">{{review.created}}</p>
+                                        <div class="">
+                                            <h5>{{review.reviewer.first_name}}</h5>
+                                           
+                                            <div class="">
+                                                <p class="text">{{review.body}}</p>
+                                                {{ review.get_rating_display }}
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                    
+                                
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                    {% if can_add_review %}
+                        
+                    <form action="{% url 'add_review' product.id %}" method="POST">
+                        {% csrf_token %}
+                        {{review_form}}
+                        <button class="w-100 btn form-control border-secondary py-2 mt-3 bg-white text-primary" type="submit">Submit Review</button>
+                
+                    </form>
+                    {% else %}
+
+                    {% endif %}
+                        
+                </div>
+            </div>
+          
+        </div>
+       
+    </div>
+</div>
+<!-- Single Product End -->
+
+
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock  %}
+
+
+{% block content %}
+ 
+
+
+
+
+        <!-- Contact Start -->
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    {% include 'messages.html' %}
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="text-center mx-auto" style="max-width: 700px;">
+                                <h1 class="text-primary">Dashboard</h1>
+                                <h3>Welcome {{user.first_name}} {{user.last_name}}</h3>
+                                <div class="image-container" style="height:100px; width:100px; border-radius:50%; border: 2.5px solid green; margin: 0 auto;">
+                                    <img class="img-fluid cover" src="{{user.customer.image.url}}" alt="" style="height:100%; width:100%; border-radius:50%; object-fit:contain;">
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class=" d-flex row g-2">
+                                
+                                {% if form %}
+                                    
+                                <form action="{% url 'profile_update' %}" method="POST">
+                                    {% csrf_token %}
+                                    {{form}}
+                                    <button class="w-70 btn form-control border-secondary py-3 bg-white text-primary col " type="submit">Update</button>
+                                </form>
+                                {% else %}
+
+                                <a href="{% url 'profile_update' %}" class="w-70 btn form-control border-secondary py-3 bg-white text-primary col " type="submit">Update Profile</a>
+                                <a href="{% url 'change_password' %}" class="w-70 btn form-control border-secondary py-3 bg-info text-dark col" type="submit">Change Password</a>
+                                {% endif %}
+                                    
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class=" d-flex row g-2">
+                                        <h2>Wish-listed Products</h2>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Products</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if wishlist_items %}
+                                                    
+                                                    {% for product in wishlist_items %}
+                                    
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="{{product.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="{{product.name}}">
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.name}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.price}} $</p>
+                                                        </td>
+                                                    </tr>
+                                                        
+                                                    {% endfor %}
+                                                        
+                                                    
+                                                    {% else %}
+                                                    <tr>
+                                                        <p>No Products Available</p>
+                                                    
+                                                    </tr>
+                                                    {% endif %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                      
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class=" d-flex row g-2">
+                                        <h2>Purchase Products</h2>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Products</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Purchase on</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if purchase_items %}
+                                                    
+                                                    {% for product in purchase_items %}
+                                    
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="{{product.product.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="{{product.product.name}}">
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.product.name}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.product.price}} $</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.purchase_date|date:"F d, Y h:i A"}} </p>
+                                                        </td>
+                                                    </tr>
+                                                        
+                                                    {% endfor %}
+                                                        
+                                                    
+                                                    {% else %}
+                                                    <tr>
+                                                        <p>No Products Available</p>
+                                                    
+                                                    </tr>
+                                                    {% endif %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+{% endblock %}

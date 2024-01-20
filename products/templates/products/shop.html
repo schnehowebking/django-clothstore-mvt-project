@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop{% endblock  %}
+
+
+{% block content %}
+  <!--  Shop Start-->
+  <div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Shop</h1>
+        {% include 'messages.html' %}
+         
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <form id="search-form" method="get" action="{% url 'shop' %}">
+                            <div class="input-group w-100 mx-auto d-flex">
+                                <input type="text" name="search" value="{{ request.GET.search }}" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                <span id="search-icon-1" class="input-group-text p-3" style="cursor: pointer;" onclick="submitForm()"><i class="fa fa-search"></i></span>
+                            </div>
+                        </form>
+                        
+                        <script>
+                            function submitForm() {
+                                document.getElementById('search-form').submit();
+                            }
+                        </script>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 rounded d-flex justify-content-between ">
+                            <label for="fruits">Default Sorting:</label>
+                            
+                            <div class="nav-item dropdown">
+                                <a href="#" class="my-auto nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                  Short Product
+                                </a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                  
+                                    <a href="?sort_by_price=asc" class="dropdown-item">Price Asc</a>
+                                    <a href="?sort_by_price=desc" class="dropdown-item">Price Desc</a>
+                                    <a href="?sort_by_popularity=desc" class="dropdown-item">Most Popular</a>
+                                
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Categories</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'shop' %}"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                                
+                                            </div>
+                                        </li>
+                                        
+                                        {% for category in categories %}
+                                            
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'products_by_category' category.slug %}"><i class="fas fa-apple-alt me-2"></i>{{category.name}}</a>
+                                                
+                                            </div>
+                                        </li>
+                                      
+                                        {% endfor %}
+                                            
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Size</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'shop' %}"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                                
+                                            </div>
+                                        </li>
+                                        
+                                        {% for size in sizes %}
+                                            
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'products_by_size' size.slug %}"><i class="fas fa-apple-alt me-2"></i>{{size.name}}</a>
+                                                
+                                            </div>
+                                        </li>
+                                      
+                                        {% endfor %}
+                                            
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Color</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'shop' %}"><i class="fas fa-apple-alt me-2"></i>All</a>
+                                                
+                                            </div>
+                                        </li>
+                                        
+                                        {% for color in colors %}
+                                            
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{% url 'products_by_color' color.slug %}"><i class="fas fa-apple-alt me-2"></i>{{color.name}}</a>
+                                                
+                                            </div>
+                                        </li>
+                                      
+                                        {% endfor %}
+                                            
+                                    </ul>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center">
+                            
+                            {% for product in products %}
+                                
+                            <div class="col-md-6 col-lg-6 col-xl-4">
+                                <div class="rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img src="{{product.image.url}}" class="img-fluid w-100 rounded-top" alt="{{product.name}}">
+                                    </div>
+                                    <div class=" d-flex justify-content-between">
+                                        <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.category.name}}</div>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.size.name}}</div>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.color.name}}</div>
+                                    </div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <a href="{% url 'productDetailspage' product.id %}"><h4>{{product.name}}</h4></a>
+                                        <p>{{product.description}}</p>
+                                        <p>Ratings(AVG): {{product.avg_rating}}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">${{product.price}}</p>
+                                            <p class="text-dark fs-5 fw-bold mb-0">{{product.quantity}} Pcs</p>
+                                            <a href="{% url 'productDetailspage' product.id %}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                                
+                           
+                            <div class="col-12">
+                                <div class="pagination d-flex justify-content-center mt-5">
+                                    {% if products.has_previous %}
+                                        <a href="?page=1" class="rounded">1</a>
+                                        <a href="?page={{ products.previous_page_number }}" class="rounded">{{ products.previous_page_number }}</a>
+                                    {% endif %}
+                            
+                                    <a href="?page={{ products.number }}" class="active rounded">{{ products.number }}</a>
+                            
+                                    {% if products.has_next %}
+                                        <a href="?page={{ products.next_page_number }}" class="rounded">{{ products.next_page_number }}</a>
+                                        <a href="?page={{ products.paginator.num_pages }}" class="rounded">&raquo;</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Shop End-->
+
+
+{% endblock %}
