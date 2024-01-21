@@ -15,47 +15,52 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from products.models import *
+import logging
+from django.contrib.sites.shortcuts import get_current_site
 
-
+logger = logging.getLogger(__name__)
 
 
 class UserRegistrationView(FormView):
     template_name = 'accounts/register.html'
     form_class = UserRegistrationForm
     success_url = reverse_lazy('home')
-    
-    def form_valid(self,form):
-        print(form.cleaned_data)
+
+    def form_valid(self, form):
         user = form.save()
         token = default_token_generator.make_token(user)
-        print("token ", token)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        print("uid ", uid)
-        confirm_link = f"https://islamiyahtechclothstore.onrender.com/accounts/active/{uid}/{token}"
+        
+        current_site = get_current_site(self.request)
+        domain = current_site.domain
+
+        confirm_link = f"{self.request.scheme}://{domain}{reverse('activate', args=[uid, token])}"
+        
         email_subject = "Confirm Your Email"
-        email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
-        email = EmailMultiAlternatives(email_subject , '', to=[user.email])
+        email_body = render_to_string('confirm_email.html', {'confirm_link': confirm_link})
+        email = EmailMultiAlternatives(email_subject, '', to=[user.email])
         email.attach_alternative(email_body, "text/html")
         email.send()
+        
         login(self.request, user)
-        print(user)
         return super().form_valid(form)
-
 
 
 def activate(request, uid64, token):
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User._default_manager.get(pk=uid)
-    except(User.DoesNotExist):
-        user = None 
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
     
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return redirect('login')
-    else:
-        return redirect('register')
+    user.is_active = True
+    user.save()
+    logger.info(f"User {user.username} activated successfully.")
+    return redirect('login')
+ 
+
+
 
 
 class UserProfileView(LoginRequiredMixin, ListView):
