@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Dashboard{% endblock  %}
 
@@ -20,7 +21,15 @@
                                 <h1 class="text-primary">Dashboard</h1>
                                 <h3>Welcome {{user.first_name}} {{user.last_name}}</h3>
                                 <div class="image-container" style="height:100px; width:100px; border-radius:50%; border: 2.5px solid green; margin: 0 auto;">
+                                    
+                                    {% if user.customer.image %}
+                                        
                                     <img class="img-fluid cover" src="{{user.customer.image.url}}" alt="" style="height:100%; width:100%; border-radius:50%; object-fit:contain;">
+                                    {% else %}
+                                    <img class="img-fluid cover" src="{% static 'avatar.jpg' %}" alt="" style="height:100%; width:100%; border-radius:50%; object-fit:contain;">
+
+                                    {% endif %}
+                                        
                                 </div>
                                
                             </div>
