@@ -40,9 +40,3 @@ class ReviewForm(forms.ModelForm):
 
 
 
-
-class AddToWishListForm(forms.ModelForm):
-    class Meta:
-        model = WishList
-        fields = []
-

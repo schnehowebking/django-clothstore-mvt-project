@@ -17,6 +17,7 @@ from django.utils.encoding import force_bytes
 from products.models import *
 import logging
 from django.contrib.sites.shortcuts import get_current_site
+from cart.models import Cart
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,8 @@ class UserProfileView(LoginRequiredMixin, ListView):
 
         user_wishlist_items = WishList.objects.filter(user=self.request.user).first()
         context['wishlist_items'] = user_wishlist_items.items.all() if user_wishlist_items else []
+        cart_items = Cart.objects.filter(user=self.request.user).first()
+        context['cart_items'] = cart_items.items.all() if cart_items else []
 
         user_purchase_items = Purchase.objects.filter(user=self.request.user)
         context['purchase_items'] = user_purchase_items
@@ -125,5 +128,22 @@ class UserAccountUpdateView(LoginRequiredMixin, View):
             return redirect('dashboard')
         return render(request, self.template_name, {'form': form}) 
     
-    
 
+@login_required
+def add_balance(request):
+    if request.method == 'POST':
+        form = AddBalanceForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
+            if amount > 0:
+                customer = request.user.customer
+                customer.balance += amount
+                customer.save()
+                messages.success(request, f'Balance of {amount} added successfully.')
+                return redirect('dashboard')
+            else:
+                messages.error(request, 'Please enter a valid positive amount.')
+    else:
+        form = AddBalanceForm()
+
+    return render(request, 'accounts/add_balance.html', {'form': form})

@@ -5,6 +5,7 @@ urlpatterns = [
 
     path('dashboard/', views.UserProfileView.as_view(), name='dashboard'),
      path('profile_update/', views.UserAccountUpdateView.as_view(), name='profile_update' ),
+     path('add_balance/', views.add_balance, name='add_balance' ),
     path('register/', views.UserRegistrationView.as_view(), name='register'),
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.user_logout, name='logout'),

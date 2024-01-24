@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock  %}
+
+
+{% block content %}
+ 
+
+
+
+
+        <!-- Contact Start -->
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    {% include 'messages.html' %}
+                    <div class="row g-4">
+                        
+                     
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class=" d-flex row g-2">
+                                        <h2>Cart Items</h2>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Products</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if cart_items %}
+                                                    
+                                                    {% for product in cart_items %}
+                                    
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="{{product.product.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="{{product.product.name}}">
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.product.name}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 mt-4">{{product.product.price}} $</p>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{% url 'remove_from_cart' product.id %}" method= "POST">
+                                                                {% csrf_token %}
+                                                                <button class="badge bg-danger">X</button>
+                                                            </form>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                        
+                                                    {% endfor %}
+                                                   
+                                                        
+                                                    
+                                                    {% else %}
+                                                    <tr>
+                                                        <p>No Products Available</p>
+                                                    
+                                                    </tr>
+                                                    {% endif %}
+                                                    
+                                                </tbody>
+                                                <tfoot class="bg-info">
+                                                    <tr>
+                                                        <th><h4>Sub Total</h4></th>
+                                                        <td></td>
+                                                        <td><strong>
+                                                        {% if cart_items %}
+                                                        {{cart_items.cart.get_total_price }} 
+                                                        {% else %}
+                                                        0
+                                                        {% endif %} $</strong></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        
+                                        {% if cart_items %}
+                                        <form action="{% url 'cartbuy_product' %}" method="POST">
+                                            {% csrf_token %}
+                                            <button class="btn btn-primary">Buy Now</button>
+                                        </form>
+                
+                                            
+                                        {% endif %}
+                                            
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+{% endblock %}

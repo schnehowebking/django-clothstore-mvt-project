@@ -11,6 +11,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, related_name="customer", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="accounts/images/")
     gender = models.CharField(choices = GENDER, max_length = 10)
+    balance = models.DecimalField(default=0, max_digits=12, decimal_places=2)
     mobile_no = models.CharField(max_length = 12)
 
     def __str__(self):

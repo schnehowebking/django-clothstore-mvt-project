@@ -13,7 +13,6 @@
         {% csrf_token %}
         {% for field in form.visible_fields %}
                 <div class="mb-4">
-                    
                     <input class="w-100 form-control border-1 py-1" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}">
                 </div>
                 

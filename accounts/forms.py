@@ -134,3 +134,18 @@ class UserLoginForm(AuthenticationForm):
             })
 
 
+
+class AddBalanceForm(forms.Form):
+    amount = forms.DecimalField(label='Amount', max_digits=12, decimal_places=2)
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'w-100 form-control border-1 py-1'
+                )
+            })
+
+

@@ -1,6 +1,8 @@
 from django.db.models import Count, Avg, ExpressionWrapper, F, fields
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import viewsets, filters, pagination
+
+from cart.models import Cart
 from .models import Product, Review, WishList
 from categories.models import *
 from .forms import *
@@ -132,15 +134,20 @@ def add_review(request, product_id):
 class BuyProductView(View):
     def post(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
+        user=request.user
+        purchase_price = product.price
+        if user.customer.balance < purchase_price:
+            messages.error(request, "Don's have enough balance for puschase")
+            return redirect('product_detail', product_id=product_id)
+
 
         if product.quantity <= 0:
             messages.error(request, "Product out of stock.")
             return redirect('product_detail', product_id=product_id)
 
-        purchase_price = product.price
 
         purchase_entry = Purchase.objects.create(
-            user=request.user,
+            user=user,
             product=product,
             purchase_date=timezone.now(),
             purchase_price=purchase_price,
@@ -148,12 +155,48 @@ class BuyProductView(View):
 
         product.quantity -= 1
         product.save()
+        user.customer.balance -= purchase_price
+        user.customer.save()
 
         messages.success(request, "Product purchased successfully.")
         return redirect('dashboard')
     
+@method_decorator(login_required, name='dispatch')
+class BuyCartProductView(View):
+    def post(self, request):
+        user = request.user
+        cart, created = Cart.objects.get_or_create(user=user)
+        cart_items = cart.cartitem_set.all()
+
+        total_price = sum(cart_item.product.price for cart_item in cart_items)
+
+        if user.customer.balance < total_price:
+            messages.error(request, "You don't have enough balance to purchase all items in the cart.")
+            return redirect('dashboard')
+
+        for cart_item in cart_items:
+            product = cart_item.product
+            purchase_price = product.price
+
+            purchase_entry = Purchase.objects.create(
+                user=user,
+                product=product,
+                purchase_date=timezone.now(),
+                purchase_price=purchase_price,
+            )
 
 
+            product.quantity -= 1
+            product.save()
+            user.customer.balance -= total_price
+            user.customer.save()
+            cart_item.delete()
+
+        messages.success(request, "All items from the cart have been purchased successfully.")
+        return redirect('dashboard')
+    
+
+@login_required
 def add_to_wishlist(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     user = request.user
@@ -166,3 +209,6 @@ def add_to_wishlist(request, product_id):
         messages.success(request, "Product Wishlisted successfully.")
         return redirect('dashboard')
     return render(request, 'products/product_details.html', {'product': product})
+
+
+

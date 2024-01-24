@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'django.contrib.humanize',
     "core",
+    "cart",
     "accounts",
     "products",
     "categories",

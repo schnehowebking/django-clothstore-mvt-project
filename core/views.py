@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from products.models import *
 from .models import *
+from cart.models import Cart
 
 # Create your views here.
 
