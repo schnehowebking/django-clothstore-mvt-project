@@ -100,7 +100,7 @@ Logout securely when done.
 
 ## Screenshots
 
-<img src="./sss/ss1.png" width="350" alt="schnehowebking" /><img  src="./sss/ss2.png" width="350" alt="schnehowebking" /><img  src="./sss/ss3.png" width="350" alt="schnehowebking" /><img  src="./sss/ss4.png" width="350" alt="schnehowebking" /><img  src="./sss/ss5.png" width="350" alt="schnehowebking" /><img  src="./sss/ss6.png" width="350" alt="schnehowebking" /><img  src="./sss/ss7.png" width="350" alt="schnehowebking" />
+<img src="./sss/ss1.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss2.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss3.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss4.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss5.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss6.png" width="350" alt="schnehowebking" />  <img  src="./sss/ss7.png" width="350" alt="schnehowebking" />
 
 
 ## Support
