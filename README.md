@@ -41,42 +41,35 @@ Welcome to IST Cloth Store, an online clothing store built using Django. This we
    ``` 
    git clone https://github.com/your-username/IST-Cloth-Store.git
    cd IST-Cloth-Store
-Create Virtual Environment:
+2. Create Virtual Environment:
+   ```
+   python -m venv venv 
 
  
  
-python -m venv venv
-Activate Virtual Environment:
 
-On Windows:
- 
- 
-.\venv\Scripts\activate
-On macOS/Linux:
- 
- 
-source venv/bin/activate
-Install Dependencies:
+3. Activate Virtual Environment:
 
- 
- 
-pip install -r requirements.txt
-Database Migration:
-
- 
- 
-python manage.py migrate
-Create Superuser:
-
- 
- 
-python manage.py createsuperuser
-Run the Development Server:
-
- 
- 
-python manage.py runserver
-Visit http://localhost:8000/ in your browser.
+1. On Windows:
+   ```
+   .\venv\Scripts\activate
+2. On macOS/Linux:
+   ```
+   source venv/bin/activate
+4. Install Dependencies:
+   ```
+   pip install -r requirements.txt
+5. Database Migration:
+   ```
+   python manage.py migrate
+6. Create Superuser:
+   ```
+   python manage.py createsuperuser
+7. Run the Development Server:
+   ```
+   python manage.py runserver
+   
+Now Visit http://localhost:8000/ in your browser.
 
 ## Usage
 Register an Account:
@@ -107,5 +100,3 @@ Logout securely when done.
 <p><a href="https://www.buymeacoffee.com/schnehowebking"> 
   <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="schnehowebking" /></a>
 </p>
-
-
