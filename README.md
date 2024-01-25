@@ -43,11 +43,7 @@ Welcome to IST Cloth Store, an online clothing store built using Django. This we
    cd IST-Cloth-Store
 2. Create Virtual Environment:
    ```
-   python -m venv venv 
-
- 
- 
-
+   python -m venv venv
 3. Activate Virtual Environment:
 
 1. On Windows:
@@ -68,7 +64,8 @@ Welcome to IST Cloth Store, an online clothing store built using Django. This we
 7. Run the Development Server:
    ```
    python manage.py runserver
-   
+
+
 Now Visit http://localhost:8000/ in your browser.
 
 ## Usage
