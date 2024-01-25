@@ -70,9 +70,9 @@
                         <div class="d-flex m-3 me-0">
                             <a href="{% url 'view_cart' %}" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                {% if cart_items %}
+                                {% if request.user.is_authenticated %}
                                     <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
-                                        {{ cart_items.count }}
+                                        {{cart_item_count}}
                                     </span>
                                 {% else %}
                                     <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>

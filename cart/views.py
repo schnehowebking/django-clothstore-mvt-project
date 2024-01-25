@@ -27,9 +27,13 @@ def view_cart(request):
     user = request.user
     cart, created = Cart.objects.get_or_create(user=user)
     cart_items = cart.cartitem_set.all()
+    total_subtotal = sum(item.get_subtotal() for item in cart_items)
+
+    #NEED TO PASS SUBTOTAL
+
     print(cart_items)
 
-    return render(request, 'cart/view_cart.html', {'cart_items': cart_items, 'cart': cart})
+    return render(request, 'cart/view_cart.html', {'cart_items': cart_items, 'cart': cart, 'total_subtotal': total_subtotal})
 
 
 @login_required

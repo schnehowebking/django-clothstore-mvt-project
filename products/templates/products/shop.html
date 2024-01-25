@@ -134,7 +134,7 @@
                             {% for product in products %}
                                 
                             <div class="col-md-6 col-lg-6 col-xl-4">
-                                <div class="rounded position-relative fruite-item">
+                                <div class="rounded position-relative fruite-item border border-secondary">
                                     <div class="fruite-img">
                                         <img src="{{product.image.url}}" class="img-fluid w-100 rounded-top" alt="{{product.name}}">
                                     </div>
@@ -143,9 +143,9 @@
                                         <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.size.name}}</div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.color.name}}</div>
                                     </div>
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                    <div class="p-4 ">
                                         <a href="{% url 'productDetailspage' product.id %}"><h4>{{product.name}}</h4></a>
-                                        <p>{{product.description}}</p>
+                                        <p>{{product.description | truncatewords:"4"}}</p>
                                         <p>Ratings(AVG): {{product.avg_rating}}</p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                             <p class="text-dark fs-5 fw-bold mb-0">${{product.price}}</p>

@@ -11,6 +11,7 @@
 
 
         <!-- Contact Start -->
+        <hr><hr><hr><hr>
         <div class="container-fluid contact py-5">
             <div class="container py-5">
                 <div class="p-5 bg-light rounded">
@@ -79,7 +80,7 @@
                                                         <td></td>
                                                         <td><strong>
                                                         {% if cart_items %}
-                                                        {{cart_items.cart.get_total_price }} 
+                                                        {{total_subtotal}} 
                                                         {% else %}
                                                         0
                                                         {% endif %} $</strong></td>

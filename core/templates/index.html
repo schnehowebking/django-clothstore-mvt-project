@@ -134,7 +134,7 @@
                             <div class="row g-4">
                                 {% for product in products|slice:":12" %}
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
+                                        <div class="rounded position-relative fruite-item border border-secondary">
                                             <div class="fruite-img">
                                                 <img src="{{product.image.url}}" class="img-fluid w-100 rounded-top" alt="{{product.name}}">
                                             </div>
@@ -144,7 +144,7 @@
                                                 <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.size.name}}</div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded " >{{product.color.name}}</div>
                                             </div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                            <div class="p-4">
                                                 <h4>{{product.name}}</h4>
                                                 <p>{{product.description}}</p>
                                                 <p>Rating(AVG): {{product.avg_rating}}</p>
@@ -165,12 +165,12 @@
                                     {% for product in products|slice:":12" %}
                                         {% if product.category == category %}
                                             <div class="col-md-6 col-lg-4 col-xl-3">
-                                                <div class="rounded position-relative fruite-item">
+                                                <div class="rounded position-relative fruite-item border border-secondary">
                                                     <div class="fruite-img">
                                                         <img src="{{product.image.url}}" class="img-fluid w-100 rounded-top" alt="{{product.name}}">
                                                     </div>
                                                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{product.category.name}}</div>
-                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <div class="p-4">
                                                         <h4>{{product.name}}</h4>
                                                         <p>{{product.description}}</p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
@@ -244,7 +244,7 @@
                                     <img src="{{product.image.url}}" class="img-fluid rounded-circle w-100" alt="{{product.name}}">
                                 </div>
                                 <div class="col-6">
-                                    <a href="#" class="h5">{{product.name}}</a>
+                                    <a href="#" class="h5">{{product.name | truncatewords:"2"}}</a>
                                     <div class="d-flex my-3">
                                         <i class="fas fa-star text-primary"></i>
                                         <i class="fas fa-star text-primary"></i>
