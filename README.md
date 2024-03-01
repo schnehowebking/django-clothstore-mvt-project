@@ -39,8 +39,8 @@ Welcome to IST Cloth Store, an online clothing store built using Django. This we
 
 1. **Clone the Repository:**
    ``` 
-   git clone https://github.com/your-username/IST-Cloth-Store.git
-   cd IST-Cloth-Store
+   git clone https://github.com/schnehowebking/django-clothstore-mvt-project.git
+   cd django-clothstore-mvt-project
 2. Create Virtual Environment:
    ```
    python -m venv venv
