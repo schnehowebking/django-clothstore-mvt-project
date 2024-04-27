@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+SITE_ID=2
+
 
 # Application definition
 
@@ -46,7 +48,27 @@ INSTALLED_APPS = [
     "accounts",
     "products",
     "categories",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
 ]
+
+
+SOCIALACCOUNT_PROVIDERS ={
+    "google":{
+        "SCOPE":[
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS":{
+            "access_type":"online"
+        }
+    }
+    
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -145,3 +167,13 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env("EMAIL_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
+)
+
+
+LOGIN_REDIRECT_URL = "dashboard"
+LOGOUT_REDIRECT_URL = "/"

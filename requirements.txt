@@ -55,6 +55,7 @@ firebase-admin
 flake8
 Flask
 future
+gcloud
 gevent
 gevent-websocket
 google-api-core
@@ -79,6 +80,7 @@ isort
 itsdangerous
 Jinja2
 jmespath
+jwcrypto
 keyring
 kombu
 Markdown
@@ -91,6 +93,7 @@ mss
 mypy-extensions
 Naked
 numpy
+oauth2client
 oauthlib
 opencv-python
 openpyxl
@@ -130,6 +133,7 @@ PyQt6-Qt6
 PyQt6-sip
 PyQt6-WebEngine
 PyQt6-WebEngine-Qt6
+Pyrebase4
 PyRect
 pyscreenshot
 PyScreeze
@@ -138,6 +142,7 @@ pytest
 pytest-django
 python-dateutil
 python-decouple
+python-jwt
 python3-openid
 pytweening
 pytz
@@ -146,6 +151,7 @@ PyYAML
 redis
 requests
 requests-oauthlib
+requests-toolbelt
 rsa
 s3transfer
 segno

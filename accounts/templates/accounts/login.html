@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 
 {% block title %}Login{% endblock  %}
 
@@ -20,6 +21,12 @@
         <button class="w-100 btn form-control border-secondary py-2 mt-3 bg-white text-primary" type="submit">Login</button>
 
     </form>
+    <div class="row">
+        <div class="col-md-12">
+          
+            <a href="{% provider_login_url 'google' %}?next=/">Login With Google</a>
+        </div>
+    </div>
 </div>
 </div>
 
