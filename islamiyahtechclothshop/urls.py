@@ -24,7 +24,7 @@ from cart import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include('accounts.urls')),
-    path("account/", include('allauth.urls')),
+    path("accounts/", include('allauth.urls')),
     path("shop/", include('products.urls')),
     path("", include('core.urls')),
     path("categories/", include('categories.urls')),
